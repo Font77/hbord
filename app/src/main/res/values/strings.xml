@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="ime_name">heksikibord</string>
+    <string name="word_separators">\u0020.,;:!?\n()[]*&amp;@{}/&lt;&gt;_+=|&quot;</string>
+    <string name="label_go_key">go</string>
+    <string name="label_next_key">nkst</string>
+    <string name="label_send_key">send</string>
+    <string name="label_subtype_generic">%s</string>
+    <string name="label_subtype_en_GB">heksifglish</string>
+    <string name="settings_name">heksikibord sqtifgs</string>
+    <string name="language_selection_title">input bhasha</string>
+    <string name="select_language">slqkt input bhasha</string>
+    <string name="general_category">jnrql</string>
+</resources>
