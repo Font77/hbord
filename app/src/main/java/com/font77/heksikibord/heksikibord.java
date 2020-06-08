@@ -36,7 +36,8 @@ public class heksikibord extends InputMethodService implements KeyboardView.OnKe
             if (displayWidth == mLastDisplayWidth) return;
             mLastDisplayWidth = displayWidth;
         }
-        mSymbolsKeyboard1 = new lAtinqibord(this, R.xml.symbols1);
+        // mSymbolsKeyboard1 = new lAtinqibord(this, R.xml.symbols1);
+        mSymbolsKeyboard1 = new lAtinqibord(this, R.xml.indish1);
         mSymbolsKeyboard2 = new lAtinqibord(this, R.xml.symbols2);
         mSymbolsKeyboard3 = new lAtinqibord(this, R.xml.symbols3);
     }
@@ -121,33 +122,13 @@ public class heksikibord extends InputMethodService implements KeyboardView.OnKe
     public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype) {
         mInputView.setSubtypeOnSpaceKey(subtype);
     }
-    /**
-     * Deal with the editor reporting movement of its cursor.
-     */
-    @Override public void onUpdateSelection(int oldSelStart, int oldSelEnd,
-                                            int newSelStart, int newSelEnd,
-                                            int candidatesStart, int candidatesEnd) {
-        super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd,
-                candidatesStart, candidatesEnd);
-
-        // If the current selection in the text view changes, we should
-        // clear whatever candidate text we have.
-        if (mComposing.length() > 0 && (newSelStart != candidatesEnd
-                || newSelEnd != candidatesEnd)) {
-            mComposing.setLength(0);
-            updateCandidates();
-            InputConnection ic = getCurrentInputConnection();
-            if (ic != null) {
-                ic.finishComposingText();
-            }
+    @Override public void onUpdateSelection(int oldSelStart, int oldSelEnd, int newSelStart, int newSelEnd, int candidatesStart, int candidatesEnd) {
+        super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd);
+        if (mComposing.length() > 0 && (newSelStart != candidatesEnd || newSelEnd != candidatesEnd)) {
+            mComposing.setLength(0);updateCandidates();InputConnection ic = getCurrentInputConnection();
+            if (ic != null) ic.finishComposingText();
         }
     }
-    /**
-     * This tells us about completions that the editor has determined based
-     * on the current text in it.  We want to use this in fullscreen mode
-     * to show the completions ourself, since the editor can not be seen
-     * in that situation.
-     */
     @Override public void onDisplayCompletions(CompletionInfo[] completions) {
         if (mCompletionOn) {
             mCompletions = completions;
