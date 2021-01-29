@@ -44,7 +44,7 @@
         <Key android:codes="86" android:keyLabel="V"/>
         <Key android:codes="87" android:keyLabel="W"/>
         <Key android:codes="77" android:keyLabel="M"/>
-        <Key android:codes="84" android:keyLabel="T"/>
+        <Key android:codes="" android:keyLabel=""/>
         <Key android:codes="10" android:keyIcon="@drawable/sym_keyboard_return" android:keyWidth="15%p" android:keyEdgeFlags="right"/>
     </Row>
 </Keyboard>

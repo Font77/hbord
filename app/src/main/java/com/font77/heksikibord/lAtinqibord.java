@@ -8,27 +8,19 @@ import android.inputmethodservice.Keyboard;
 import android.view.inputmethod.EditorInfo;
 
 public class lAtinqibord extends Keyboard {
-    private Key mEnterKey;
-    private Key mSpaceKey;
-    private Key mModeChangeKey;
-    private Key mLanguageSwitchKey;
-    private Key mSavedModeChangeKey;
-    private Key mSavedLanguageSwitchKey;
+    private Key mEnterKey; private Key mSpaceKey; private Key mModeChangeKey;
+    private Key mLanguageSwitchKey; private Key mSavedModeChangeKey; private Key mSavedLanguageSwitchKey;
 
-    public lAtinqibord(Context context, int xmlLayoutResId) {
-        super(context, xmlLayoutResId);
-    }
+    public lAtinqibord(Context context, int xmlLayoutResId) { super(context, xmlLayoutResId); }
     public lAtinqibord(Context context, int layoutTemplateResId, CharSequence characters, int columns, int horizontalPadding) {
         super(context, layoutTemplateResId, characters, columns, horizontalPadding);
     }
     @Override
     protected Key createKeyFromXml(Resources res, Row parent, int x, int y, XmlResourceParser parser) {
         Key key = new lAtinqi(res, parent, x, y, parser);
-        if (key.codes[0] == 10) {
-            mEnterKey = key;
-        } else if (key.codes[0] == ' ') {
-            mSpaceKey = key;
-        } else if (key.codes[0] == Keyboard.KEYCODE_MODE_CHANGE) {
+        if (key.codes[0] == 10) { mEnterKey = key; }
+        else if (key.codes[0] == ' ') { mSpaceKey = key; }
+        else if (key.codes[0] == Keyboard.KEYCODE_MODE_CHANGE) {
             mModeChangeKey = key;
             mSavedModeChangeKey = new lAtinqi(res, parent, x, y, parser);
         } else if (key.codes[0] == lAtinqibordviyu.KEYCODE_LANGUAGE_SWITCH) {
@@ -37,36 +29,22 @@ public class lAtinqibord extends Keyboard {
         }
         return key;
     }
-    /**
-     * Dynamically change the visibility of the language switch key (a.k.a. globe key).
-     * @param visible True if the language switch key should be visible.
-     */
     void setLanguageSwitchKeyVisibility(boolean visible) {
         if (visible) {
-            // The language switch key should be visible. Restore the size of the mode change key
-            // and language switch key using the saved layout.
             mModeChangeKey.width = mSavedModeChangeKey.width;
             mModeChangeKey.x = mSavedModeChangeKey.x;
             mLanguageSwitchKey.width = mSavedLanguageSwitchKey.width;
             mLanguageSwitchKey.icon = mSavedLanguageSwitchKey.icon;
             mLanguageSwitchKey.iconPreview = mSavedLanguageSwitchKey.iconPreview;
         } else {
-            // The language switch key should be hidden. Change the width of the mode change key
-            // to fill the space of the language key so that the user will not see any strange gap.
             mModeChangeKey.width = mSavedModeChangeKey.width + mSavedLanguageSwitchKey.width;
             mLanguageSwitchKey.width = 0;
             mLanguageSwitchKey.icon = null;
             mLanguageSwitchKey.iconPreview = null;
         }
     }
-    /**
-     * This looks at the ime options given by the current editor, to set the
-     * appropriate label on the keyboard's enter key (if it has one).
-     */
     void setImeOptions(Resources res, int options) {
-        if (mEnterKey == null) {
-            return;
-        }
+        if (mEnterKey == null) { return; }
         switch (options&(EditorInfo.IME_MASK_ACTION|EditorInfo.IME_FLAG_NO_ENTER_ACTION)) {
             case EditorInfo.IME_ACTION_GO:
                 mEnterKey.iconPreview = null;
@@ -93,22 +71,11 @@ public class lAtinqibord extends Keyboard {
                 break;
         }
     }
-    void setSpaceIcon(final Drawable icon) {
-        if (mSpaceKey != null) {
-            mSpaceKey.icon = icon;
-        }
-    }
+    void setSpaceIcon(final Drawable icon) { if (mSpaceKey != null) { mSpaceKey.icon = icon; } }
     static class lAtinqi extends Keyboard.Key {
-
-        public lAtinqi(Resources res, Keyboard.Row parent, int x, int y,
-                        XmlResourceParser parser) {
+        public lAtinqi(Resources res, Keyboard.Row parent, int x, int y, XmlResourceParser parser) {
             super(res, parent, x, y, parser);
         }
-
-        /**
-         * Overriding this method so that we can reduce the target area for the key that
-         * closes the keyboard.
-         */
         @Override
         public boolean isInside(int x, int y) {
             return super.isInside(x, codes[0] == KEYCODE_CANCEL ? y - 10 : y);
